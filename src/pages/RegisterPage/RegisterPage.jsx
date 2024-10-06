@@ -1,12 +1,13 @@
 import DocumentTitle from '../../components/DocumentTitle';
 import { RegisterForm } from '../../components/RegisterForm/RegisterForm';
 
-export default function RegisterPage() {
+const RegisterPage = () => {
   return (
     <div>
-      <DocumentTitle>Register</DocumentTitle>
-      <h2>Create a new account</h2>
+      <DocumentTitle>Registration</DocumentTitle>
       <RegisterForm />
     </div>
   );
-}
+};
+
+export default RegisterPage;
