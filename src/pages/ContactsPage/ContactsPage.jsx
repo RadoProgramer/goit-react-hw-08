@@ -6,31 +6,26 @@ import ContactList from '../../components/ContactList/ContactList';
 import SearchBox from '../../components/SearchBox/SearchBox';
 import { fetchContacts, addContact, deleteContact } from '../../redux/contacts/contactsSlice';
 import { setFilter } from '../../redux/filters/filtersSlice';
+import { selectToken } from '../../redux/auth/selectors'; // Access token from Redux
 
 export default function ContactsPage() {
   const dispatch = useDispatch();
+  const token = useSelector(selectToken); // Get the token from Redux store
   const { items: contacts, loading, error } = useSelector((state) => state.contacts);
   const filter = useSelector((state) => state.filters.name);
 
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+    if (token) {
+      dispatch(fetchContacts(token)); // Pass token to fetchContacts
+    }
+  }, [dispatch, token]);
 
   const handleAddContact = (contact) => {
-    const isDuplicate = contacts.some(
-      (existingContact) => existingContact.name.toLowerCase() === contact.name.toLowerCase()
-    );
-
-    if (isDuplicate) {
-      alert(`${contact.name} is already in the contacts.`);
-      return;
-    }
-
-    dispatch(addContact(contact));
+    dispatch(addContact({ contact, token })); // Pass contact and token to addContact
   };
 
   const handleDeleteContact = (id) => {
-    dispatch(deleteContact(id));
+    dispatch(deleteContact({ id, token })); // Pass id and token to deleteContact
   };
 
   const handleFilterChange = (e) => {

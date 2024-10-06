@@ -1,42 +1,48 @@
-
-
+// contactsSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getContacts, addNewContact, deleteExistingContact } from '../../utilities/contactAPI';
 
-// Thunks for async actions
-export const fetchContacts = createAsyncThunk('contacts/fetchAll', async (_, { rejectWithValue }) => {
-  try {
-    return await getContacts();
-  } catch (error) {
-    return rejectWithValue(error.message);
+// Fetch contacts
+export const fetchContacts = createAsyncThunk(
+  'contacts/fetchAll',
+  async (token, { rejectWithValue }) => {
+    try {
+      return await getContacts(token);
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
 
-export const addContact = createAsyncThunk('contacts/addContact', async (contact, { rejectWithValue }) => {
-  try {
-    return await addNewContact(contact);
-  } catch (error) {
-    return rejectWithValue(error.message);
+export const addContact = createAsyncThunk(
+  'contacts/addContact',
+  async ({ contact, token }, { rejectWithValue }) => {
+    try {
+      return await addNewContact(contact, token);
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
 
-export const deleteContact = createAsyncThunk('contacts/deleteContact', async (id, { rejectWithValue }) => {
-  try {
-    await deleteExistingContact(id);
-    return id;
-  } catch (error) {
-    return rejectWithValue(error.message);
+export const deleteContact = createAsyncThunk(
+  'contacts/deleteContact',
+  async ({ id, token }, { rejectWithValue }) => {
+    try {
+      return await deleteExistingContact(id, token);
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
 
-// Initial state
 const initialState = {
   items: [],
   loading: false,
   error: null,
 };
 
-// Slice
+// Create the slice
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
@@ -73,7 +79,9 @@ const contactsSlice = createSlice({
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = state.items.filter((contact) => contact.id !== action.payload);
+        state.items = state.items.filter(
+          (contact) => contact.id !== action.payload
+        );
       })
       .addCase(deleteContact.rejected, (state, action) => {
         state.loading = false;
@@ -82,4 +90,5 @@ const contactsSlice = createSlice({
   },
 });
 
+// Export the reducer as default
 export default contactsSlice.reducer;
