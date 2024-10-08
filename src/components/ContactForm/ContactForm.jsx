@@ -1,50 +1,53 @@
-import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { nanoid } from "nanoid";
-import styles from "./ContactForm.module.css";
+import { useState } from 'react';
+import css from './ContactForm.module.css';
 
-const ContactForm = ({ onAddContact }) => {
-	const initialValues = {
-		name: "",
-		number: "",
-	};
+export const ContactForm = ({ onSubmit }) => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
-	const validationSchema = Yup.object({
-		name: Yup.string().required("Required"),
-		number: Yup.string().required("Required"),
-	});
+  const handleNameChange = e => {
+    setName(e.target.value);
+  };
 
-	const handleSubmit = (values, { resetForm }) => {
-		const newContact = {
-			id: nanoid(),
-			name: values.name,
-			number: values.number,
-		};
+  const handlePhoneChange = e => {
+    setNumber(e.target.value);
+  };
 
-		onAddContact(newContact);
-		resetForm();
-	};
+  const handleSubmit = e => {
+    e.preventDefault();
+    onSubmit({ name, number });
+    setName('');
+    setNumber('');
+  };
 
-	return (
-		<Formik
-			initialValues={initialValues}
-			validationSchema={validationSchema}
-			onSubmit={handleSubmit}
-		>
-			<Form className={styles.form}>
-				<label>Name</label>
-				<Field type="text" name="name" />
-				<ErrorMessage name="name" component="div" className={styles.error} />
-
-				<label>Number</label>
-				<Field type="text" name="number" />
-				<ErrorMessage name="number" component="div" className={styles.error} />
-
-				<button type="submit">Add contact</button>
-			</Form>
-		</Formik>
-	);
+  return (
+    <form className={css.form} onSubmit={handleSubmit}>
+      <h3>Add Contact</h3>
+      <input
+        className={css.input}
+        id="nameField"
+        type="text"
+        name="name"
+        value={name}
+        onChange={handleNameChange}
+        placeholder="Name"
+        pattern="^[a-zA-Zа-яА-Я]+(([' \\-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+        required
+      />
+      <input
+        className={css.input}
+        id="number"
+        type="tel"
+        name="number"
+        value={number}
+        onChange={handlePhoneChange}
+        placeholder="Phone Number"
+        pattern="\+?\d{1,4}?[ .\\-\\s]?\(?\d{1,3}?\)?[ .\\-\\s]?\d{1,4}[ .\\-\\s]?\d{1,4}[ .\\-\\s]?\d{1,9}"
+        required
+      />
+      <button className={css.button} type="submit">
+        Add contact
+      </button>
+    </form>
+  );
 };
-
-export default ContactForm;
