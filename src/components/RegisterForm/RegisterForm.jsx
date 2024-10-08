@@ -1,56 +1,73 @@
-import { useDispatch } from 'react-redux';
-import { register } from '../../redux/auth/operations';
-import css from './RegisterForm.module.css';
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { register } from "../../redux/auth/operations";
+import css from "./RegisterForm.module.css";
+
+const validationSchema = Yup.object({
+	name: Yup.string().required("Username is required"),
+	email: Yup.string()
+		.email("Invalid email address")
+		.required("Email is required"),
+	password: Yup.string()
+		.min(6, "Password must be at least 6 characters")
+		.required("Password is required"),
+});
 
 export const RegisterForm = () => {
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    dispatch(
-      register({
-        name: form.elements.name.value,
-        email: form.elements.email.value,
-        password: form.elements.password.value,
-      })
-    );
-    form.reset();
-  };
+	const handleSubmit = (values, { resetForm }) => {
+		dispatch(register(values));
+		resetForm();
+	};
 
-  return (
-    <div className={css.formModal}>
-      <div className={css.signupForm}>
-        <form onSubmit={handleSubmit} autoComplete="off">
-          <h2 className={css.heading}>Please Register</h2>
-          <input
-            type="test"
-            name="name"
-            placeholder="Choose Username"
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Create password"
-            required
-          />
-          <button className={`${css.btn} ${css.signup}`} type="submit">
-            Create Account
-          </button>
-          <p>
-            Clicking <strong>create account</strong> means that you are agree to
-            our <a href="!#">terms of services</a>.
-          </p>
-          <hr />
-        </form>
-      </div>
-    </div>
-  );
+	return (
+		<div className={css.formModal}>
+			<div className={css.signupForm}>
+				<Formik
+					initialValues={{ name: "", email: "", password: "" }}
+					validationSchema={validationSchema}
+					onSubmit={handleSubmit}
+				>
+					{() => (
+						<Form>
+							<h2 className={css.heading}>Please Register</h2>
+
+							<Field name="name" type="text" placeholder="Choose Username" />
+							<ErrorMessage name="name" component="div" className={css.error} />
+
+							<Field name="email" type="email" placeholder="Enter your email" />
+							<ErrorMessage
+								name="email"
+								component="div"
+								className={css.error}
+							/>
+
+							<Field
+								name="password"
+								type="password"
+								placeholder="Create password"
+							/>
+							<ErrorMessage
+								name="password"
+								component="div"
+								className={css.error}
+							/>
+
+							<button className={`${css.btn} ${css.signup}`} type="submit">
+								Create Account
+							</button>
+
+							<p>
+								Clicking <strong>create account</strong> means you agree to our{" "}
+								<a href="!#">terms of services</a>.
+							</p>
+							<hr />
+						</Form>
+					)}
+				</Formik>
+			</div>
+		</div>
+	);
 };

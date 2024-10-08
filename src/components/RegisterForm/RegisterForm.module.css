@@ -1,140 +1,140 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Quicksand');
+@import url("https://fonts.googleapis.com/css?family=Montserrat|Quicksand");
 
 * {
-  font-family: 'quicksand', Arial, Helvetica, sans-serif;
-  box-sizing: border-box;
+	font-family: "quicksand", Arial, Helvetica, sans-serif;
+	box-sizing: border-box;
 }
 
 html,
 body {
-  height: 100%;
-  overflow: hidden;
+	height: 100%;
+	overflow: hidden;
 }
 
 .heading {
-  text-align: center;
+	text-align: center;
 }
 
 .formModal {
-  position: relative;
-  padding-top: 25px;
-  width: 450px;
-  height: auto;
-  margin-top: 4em;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #fff;
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+	position: relative;
+	padding-top: 25px;
+	width: 450px;
+	height: auto;
+	margin-top: 4em;
+	left: 50%;
+	transform: translateX(-50%);
+	background: #fff;
+	border-top-right-radius: 20px;
+	border-top-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
 }
 
 .formModal button {
-  cursor: pointer;
-  position: relative;
-  text-transform: capitalize;
-  font-size: 1em;
-  z-index: 2;
-  outline: none;
-  background: #fff;
-  transition: 0.2s;
+	cursor: pointer;
+	position: relative;
+	text-transform: capitalize;
+	font-size: 1em;
+	z-index: 2;
+	outline: none;
+	background: #fff;
+	transition: 0.2s;
 }
 
 .formModal .btn {
-  border-radius: 20px;
-  border: none;
-  font-weight: bold;
-  font-size: 1.2em;
-  padding: 0.8em 1em 0.8em 1em !important;
-  transition: 0.5s;
-  border: 1px solid #ebebeb;
-  margin-bottom: 0.5em;
-  margin-top: 0.5em;
+	border-radius: 20px;
+	border: none;
+	font-weight: bold;
+	font-size: 1.2em;
+	padding: 0.8em 1em 0.8em 1em !important;
+	transition: 0.5s;
+	border: 1px solid #ebebeb;
+	margin-bottom: 0.5em;
+	margin-top: 0.5em;
 }
 
 .formModal .signup {
-  background: #57b846;
-  color: #fff;
+	background: #57b846;
+	color: #fff;
 }
 
 .formModal .signup:hover {
-  background: #222;
+	background: #222;
 }
 
 .formModal form {
-  position: relative;
-  width: 90%;
-  height: auto;
-  left: 50%;
-  transform: translateX(-50%);
+	position: relative;
+	width: 90%;
+	height: auto;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 .signupForm {
-  position: relative;
-  width: 100%;
-  height: auto;
-  padding-bottom: 1em;
+	position: relative;
+	width: 100%;
+	height: auto;
+	padding-bottom: 1em;
 }
 
 .signupForm button {
-  width: 100%;
-  margin-top: 0.5em;
-  padding: 0.6em;
+	width: 100%;
+	margin-top: 0.5em;
+	padding: 0.6em;
 }
 
 .formModal input {
-  position: relative;
-  width: 100%;
-  font-size: 1em;
-  padding: 1.2em 1.7em 1.2em 1.7em;
-  margin-top: 0.6em;
-  margin-bottom: 0.6em;
-  border-radius: 20px;
-  border: none;
-  background: #ebebeb;
-  outline: none;
-  font-weight: bold;
-  transition: 0.4s;
+	position: relative;
+	width: 100%;
+	font-size: 1em;
+	padding: 1.2em 1.7em 1.2em 1.7em;
+	margin-top: 0.6em;
+	margin-bottom: 0.6em;
+	border-radius: 20px;
+	border: none;
+	background: #ebebeb;
+	outline: none;
+	font-weight: bold;
+	transition: 0.4s;
 }
 
 .formModal input:focus,
 .formModal input:active {
-  transform: scaleX(1.02);
+	transform: scaleX(1.02);
 }
 
 .formModal input::-webkit-input-placeholder {
-  color: #222;
+	color: #222;
 }
 
 .formModal p {
-  font-size: 16px;
-  font-weight: bold;
+	font-size: 16px;
+	font-weight: bold;
 }
 
 .formModal p a {
-  color: #57b846;
-  text-decoration: none;
-  transition: 0.2s;
+	color: #57b846;
+	text-decoration: none;
+	transition: 0.2s;
 }
 
 .formModal p a:hover {
-  color: #222;
+	color: #222;
 }
 
 .formModal i {
-  position: absolute;
-  left: 10%;
-  top: 50%;
-  transform: translateX(-10%) translateY(-50%);
+	position: absolute;
+	left: 10%;
+	top: 50%;
+	transform: translateX(-10%) translateY(-50%);
 }
 
 .-box-sd-effect:hover {
-  box-shadow: 0 4px 8px hsla(210, 2%, 84%, 0.2);
+	box-shadow: 0 4px 8px hsla(210, 2%, 84%, 0.2);
 }
 
 @media only screen and (max-width: 500px) {
-  .formModal {
-    width: 100%;
-  }
+	.formModal {
+		width: 100%;
+	}
 }
