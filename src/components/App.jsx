@@ -25,8 +25,6 @@ export const App = () => {
 		<span className={css.loader}></span>
 	) : (
 		<Suspense fallback={<div>Loading...</div>}>
-			{" "}
-			{}
 			<Routes>
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Home />} />

@@ -3,17 +3,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 axios.defaults.baseURL = "https://connections-api.goit.global";
 
-// Ustawienie nagłówka autoryzacji
 const setAuthHeader = (token) => {
 	axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
-// Wyczyszczenie nagłówka autoryzacji
 const clearAuthHeader = () => {
 	axios.defaults.headers.common.Authorization = "";
 };
 
-// Rejestracja użytkownika
 export const register = createAsyncThunk(
 	"auth/register",
 	async (credentials, thunkAPI) => {
@@ -27,7 +24,6 @@ export const register = createAsyncThunk(
 			setAuthHeader(response.data.token);
 			return response.data;
 		} catch (error) {
-			// Sprawdzenie błędu duplikacji emaila (MongoError 11000)
 			if (error.response?.data?.code === 11000) {
 				return thunkAPI.rejectWithValue("Email is already registered");
 			}
@@ -36,7 +32,6 @@ export const register = createAsyncThunk(
 	}
 );
 
-// Logowanie użytkownika
 export const logIn = createAsyncThunk(
 	"auth/login",
 	async (credentials, thunkAPI) => {
@@ -51,7 +46,6 @@ export const logIn = createAsyncThunk(
 	}
 );
 
-// Wylogowanie użytkownika
 export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
 	try {
 		await axios.post("/users/logout");
@@ -61,7 +55,6 @@ export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
 	}
 });
 
-// Odświeżenie danych użytkownika
 export const refreshUser = createAsyncThunk(
 	"auth/refresh",
 	async (_, thunkAPI) => {
