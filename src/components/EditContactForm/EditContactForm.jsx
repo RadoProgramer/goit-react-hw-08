@@ -4,6 +4,7 @@ import css from "./EditContactForm.module.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateContact } from "../../redux/contacts/operations";
+import { toast } from "react-toastify";
 
 const validationSchema = Yup.object({
 	name: Yup.string()
@@ -48,6 +49,7 @@ export const EditContactForm = ({ contact, onClose }) => {
 
 	const handleSubmit = async (values) => {
 		await dispatch(updateContact({ id: contact.id, ...values }));
+		toast.success(`Contact "${values.name}" updated successfully!`);
 		onClose();
 	};
 

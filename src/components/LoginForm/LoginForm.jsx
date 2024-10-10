@@ -1,8 +1,10 @@
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { logIn } from "../../redux/auth/operations";
 import css from "./LoginForm.module.css";
+import { ModalTerms } from "../ModalTerms/ModalTerms";
 
 const validationSchema = Yup.object({
 	email: Yup.string()
@@ -15,11 +17,15 @@ const validationSchema = Yup.object({
 
 export const LoginForm = () => {
 	const dispatch = useDispatch();
+	const [showModal, setShowModal] = useState(false);
 
 	const handleSubmit = (values, { resetForm }) => {
 		dispatch(logIn(values));
 		resetForm();
 	};
+
+	const openModal = () => setShowModal(true);
+	const closeModal = () => setShowModal(false);
 
 	return (
 		<div className={css.formModal}>
@@ -58,13 +64,26 @@ export const LoginForm = () => {
 							<button className={`${css.btn} ${css.login}`} type="submit">
 								Log In
 							</button>
+
+							{}
 							<p>
-								<a href="!#">Forgotten account</a>
+								<a href="#!" onClick={openModal}>
+									Forgotten password
+								</a>
 							</p>
+
 							<hr />
 						</Form>
 					)}
 				</Formik>
+
+				{}
+				{showModal && (
+					<ModalTerms
+						onClose={closeModal}
+						customMessage="Password reset temporarily unavailable"
+					/>
+				)}
 			</div>
 		</div>
 	);

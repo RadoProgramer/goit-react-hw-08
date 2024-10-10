@@ -1,9 +1,10 @@
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/auth/operations";
+import { ModalTerms } from "../ModalTerms/ModalTerms";
 import css from "./RegisterForm.module.css";
-import { toast } from "react-hot-toast";
 
 const validationSchema = Yup.object({
 	name: Yup.string().required("Username is required"),
@@ -17,18 +18,19 @@ const validationSchema = Yup.object({
 
 export const RegisterForm = () => {
 	const dispatch = useDispatch();
+	const [showModal, setShowModal] = useState(false);
 
 	const handleSubmit = async (values, { resetForm }) => {
 		try {
-			const lowerCaseEmail = values.email.toLowerCase();
-
-			await dispatch(register({ ...values, email: lowerCaseEmail })).unwrap();
-			toast.success("Registration successful!");
+			await dispatch(register(values)).unwrap();
 			resetForm();
 		} catch (error) {
-			toast.error(`Registration failed: ${error}`);
+			console.error("Registration failed:", error);
 		}
 	};
+
+	const openModal = () => setShowModal(true);
+	const closeModal = () => setShowModal(false);
 
 	return (
 		<div className={css.formModal}>
@@ -66,9 +68,20 @@ export const RegisterForm = () => {
 							<button className={`${css.btn} ${css.signup}`} type="submit">
 								Create Account
 							</button>
+
+							<p>
+								Clicking <strong>create account</strong> means you agree to our{" "}
+								<a href="#!" onClick={openModal}>
+									terms of services
+								</a>
+								.
+							</p>
+							<hr />
 						</Form>
 					)}
 				</Formik>
+
+				{showModal && <ModalTerms onClose={closeModal} />}
 			</div>
 		</div>
 	);

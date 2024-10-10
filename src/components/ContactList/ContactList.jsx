@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { getContacts, getFilter } from "../../redux/contacts/selectors";
 import { EditContactForm } from "../EditContactForm/EditContactForm";
 import Fuse from "fuse.js";
+import { toast } from "react-toastify";
 import css from "./ContactList.module.css";
 
 export const ContactsList = ({ onDelete }) => {
@@ -25,6 +26,11 @@ export const ContactsList = ({ onDelete }) => {
 
 	const closeEditForm = () => {
 		setEditingContact(null);
+	};
+
+	const handleDelete = (contactId) => {
+		onDelete(contactId);
+		toast.success("Contact deleted successfully!");
 	};
 
 	return (
@@ -54,7 +60,7 @@ export const ContactsList = ({ onDelete }) => {
 									</button>
 									<button
 										className={css.buttonDelete}
-										onClick={() => onDelete(contact.id)}
+										onClick={() => handleDelete(contact.id)}
 									>
 										Delete
 									</button>
