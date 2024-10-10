@@ -1,5 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-hot-toast";
 import css from "./ContactForm.module.css";
 
 const validationSchema = Yup.object({
@@ -18,14 +19,17 @@ const validationSchema = Yup.object({
 });
 
 export const ContactForm = ({ onSubmit }) => {
+	const handleSubmit = (values, { resetForm }) => {
+		onSubmit(values);
+		toast.success(`Contact "${values.name}" added successfully!`);
+		resetForm();
+	};
+
 	return (
 		<Formik
 			initialValues={{ name: "", number: "" }}
 			validationSchema={validationSchema}
-			onSubmit={(values, { resetForm }) => {
-				onSubmit(values);
-				resetForm();
-			}}
+			onSubmit={handleSubmit}
 		>
 			{() => (
 				<Form className={css.form}>
