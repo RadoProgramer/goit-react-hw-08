@@ -4,6 +4,9 @@
 	font-family: "quicksand", Arial, Helvetica, sans-serif;
 	box-sizing: border-box;
 }
+body {
+	background: linear-gradient(45deg, #f3efb7, #7db8e7);
+}
 
 html,
 body {

@@ -24,7 +24,9 @@ export const App = () => {
 	}, [dispatch]);
 
 	return isRefreshing ? (
-		<span className={css.loader}></span>
+		<div className={css["loader-wrapper"]}>
+			<span className={css.loader}></span>
+		</div>
 	) : (
 		<Suspense fallback={<div>Loading...</div>}>
 			<Routes>

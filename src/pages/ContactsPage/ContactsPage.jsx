@@ -42,9 +42,11 @@ const ContactsPage = () => {
 				</Helmet>
 				<ContactForm onSubmit={handleSubmit} />
 				<SearchBar />
-				<div className={css.container}>
-					{isLoading && <span className={css.loader}></span>}
-				</div>
+				{isLoading && (
+					<div className={css["loader-wrapper"]}>
+						<span className={css.loader}></span>
+					</div>
+				)}
 				<ContactsList
 					contacts={contacts}
 					filter={filter}

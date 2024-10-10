@@ -88,3 +88,5 @@ ContactsList.propTypes = {
 	filter: PropTypes.string.isRequired,
 	onDelete: PropTypes.func.isRequired,
 };
+
+
