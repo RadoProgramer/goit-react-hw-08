@@ -7,7 +7,7 @@ import { useState } from "react";
 const validationSchema = Yup.object({
 	name: Yup.string()
 		.matches(
-			/^[a-zA-Zа-яА-Я\s]+(([' \-][a-zA-Zа-яА-Я\s])?[a-zA-Zа-яА-Я\s]*)*$/,
+			/^[a-zA-Zа-яА-Я\u00C0-\u017F\s]+(([' \-][a-zA-Zа-яА-Я\u00C0-\u017F\s])?[a-zA-Zа-яА-Я\u00C0-\u017F\s]*)*$/,
 			"Invalid name format. Only letters and spaces are allowed."
 		)
 		.required("Name is required"),

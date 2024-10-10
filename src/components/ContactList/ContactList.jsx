@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import {
-	getContacts,
-	getFilter,
-	getIsLoading,
-} from "../../redux/contacts/selectors";
+import { getContacts, getFilter } from "../../redux/contacts/selectors";
 import { EditContactForm } from "../EditContactForm/EditContactForm";
 import Fuse from "fuse.js";
 import css from "./ContactList.module.css";
@@ -12,7 +8,6 @@ import css from "./ContactList.module.css";
 export const ContactsList = ({ onDelete }) => {
 	const contacts = useSelector(getContacts);
 	const filter = useSelector(getFilter);
-	const isLoading = useSelector(getIsLoading);
 	const [editingContact, setEditingContact] = useState(null);
 
 	const fuse = new Fuse(contacts, {
@@ -34,11 +29,9 @@ export const ContactsList = ({ onDelete }) => {
 
 	return (
 		<div className={css.container}>
-			{isLoading ? (
-				<div>Loading...</div>
-			) : editingContact ? (
+			{editingContact ? (
 				<EditContactForm contact={editingContact} onClose={closeEditForm} />
-			) : (
+			) : filteredContacts.length > 0 ? (
 				<table className={css.table}>
 					<thead className={css.theading}>
 						<tr>
@@ -70,6 +63,8 @@ export const ContactsList = ({ onDelete }) => {
 						))}
 					</tbody>
 				</table>
+			) : (
+				<p className={css.noContacts}>No contacts found</p>
 			)}
 		</div>
 	);

@@ -28,7 +28,7 @@ thead {
 }
 
 thead th {
-	background-color: #55608f;
+	background-color: #6dbeec;
 	text-align: center;
 }
 
@@ -37,7 +37,7 @@ tbody {
 	max-height: 600px;
 	overflow-y: auto;
 	width: 100%;
-	scrollbar-color: #55608f #2c2c2c;
+	scrollbar-color: #6dbeec #2c2c2c;
 }
 
 tbody::-webkit-scrollbar {
@@ -83,7 +83,7 @@ tbody td {
 }
 
 .buttonEdit {
-	background-color: #ab9cf0;
+	background-color: #6dbeec;
 	color: black;
 	padding: 5px;
 	margin-right: 5px;
@@ -105,3 +105,9 @@ tbody td {
 .buttonDelete:hover {
 	opacity: 0.8;
 }
+.noContacts {
+	font-size: 24px;
+	text-align: center;
+	color: #555;
+  }
+  
