@@ -1,8 +1,9 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { toast } from "react-hot-toast";
-import css from "./ContactForm.module.css";
+import css from "./EditContactForm.module.css";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateContact } from "../../redux/contacts/operations";
 
 const validationSchema = Yup.object({
 	name: Yup.string()
@@ -19,8 +20,9 @@ const validationSchema = Yup.object({
 		.required("Phone number is required"),
 });
 
-export const ContactForm = ({ onSubmit }) => {
-	const [formattedNumber, setFormattedNumber] = useState("");
+export const EditContactForm = ({ contact, onClose }) => {
+	const dispatch = useDispatch();
+	const [formattedNumber, setFormattedNumber] = useState(contact.number);
 
 	const formatPhoneNumber = (value) => {
 		if (!value) return value;
@@ -44,23 +46,20 @@ export const ContactForm = ({ onSubmit }) => {
 		setFieldValue("number", formatted);
 	};
 
-	const handleSubmit = (values, { resetForm }) => {
-		onSubmit(values);
-		toast.success(`Contact "${values.name}" added successfully!`);
-
-		resetForm();
-		setFormattedNumber("");
+	const handleSubmit = async (values) => {
+		await dispatch(updateContact({ id: contact.id, ...values }));
+		onClose();
 	};
 
 	return (
 		<Formik
-			initialValues={{ name: "", number: "" }}
+			initialValues={{ name: contact.name, number: contact.number }}
 			validationSchema={validationSchema}
 			onSubmit={handleSubmit}
 		>
 			{({ setFieldValue }) => (
 				<Form className={css.form}>
-					<h3>Add Contact</h3>
+					<h3>Edit Contact</h3>
 
 					<Field name="name" type="text" placeholder="Name" />
 					<ErrorMessage name="name" component="div" className={css.error} />
@@ -75,7 +74,10 @@ export const ContactForm = ({ onSubmit }) => {
 					<ErrorMessage name="number" component="div" className={css.error} />
 
 					<button className={css.button} type="submit">
-						Add contact
+						Save
+					</button>
+					<button className={css.buttonCancel} type="button" onClick={onClose}>
+						Cancel
 					</button>
 				</Form>
 			)}

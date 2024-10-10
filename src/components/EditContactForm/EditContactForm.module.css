@@ -1,0 +1,27 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.error {
+	color: red;
+}
+
+.button {
+	background-color: #4caf50;
+	color: white;
+	padding: 10px;
+	border: none;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+.buttonCancel {
+	background-color: #f44336;
+	color: white;
+	padding: 10px;
+	border: none;
+	cursor: pointer;
+	border-radius: 5px;
+}
