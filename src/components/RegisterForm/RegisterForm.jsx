@@ -1,8 +1,9 @@
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
 import { register } from "../../redux/auth/operations";
+import { ModalTerms } from "../ModalTerms/ModalTerms";
 import css from "./RegisterForm.module.css";
 
 const validationSchema = Yup.object({
@@ -17,17 +18,19 @@ const validationSchema = Yup.object({
 
 export const RegisterForm = () => {
 	const dispatch = useDispatch();
-	const [errorMessage, setErrorMessage] = useState(null);
+	const [showModal, setShowModal] = useState(false);
 
 	const handleSubmit = async (values, { resetForm }) => {
-		setErrorMessage(null);
 		try {
 			await dispatch(register(values)).unwrap();
 			resetForm();
 		} catch (error) {
-			setErrorMessage(error);
+			console.error("Registration failed:", error);
 		}
 	};
+
+	const openModal = () => setShowModal(true);
+	const closeModal = () => setShowModal(false);
 
 	return (
 		<div className={css.formModal}>
@@ -40,9 +43,6 @@ export const RegisterForm = () => {
 					{() => (
 						<Form>
 							<h2 className={css.heading}>Please Register</h2>
-
-							{}
-							{errorMessage && <div className={css.error}>{errorMessage}</div>}
 
 							<Field name="name" type="text" placeholder="Choose Username" />
 							<ErrorMessage name="name" component="div" className={css.error} />
@@ -71,12 +71,17 @@ export const RegisterForm = () => {
 
 							<p>
 								Clicking <strong>create account</strong> means you agree to our{" "}
-								<a href="!#">terms of services</a>.
+								<a href="#!" onClick={openModal}>
+									terms of services
+								</a>
+								.
 							</p>
 							<hr />
 						</Form>
 					)}
 				</Formik>
+
+				{showModal && <ModalTerms onClose={closeModal} />}
 			</div>
 		</div>
 	);
