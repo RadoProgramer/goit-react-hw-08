@@ -18,7 +18,7 @@ export const SearchBar = () => {
 				type="text"
 				name="filter"
 				onChange={handleSearch}
-				placeholder="Search by name"
+				placeholder="Search by name or number"
 			/>
 		</div>
 	);
