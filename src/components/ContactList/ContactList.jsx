@@ -4,12 +4,14 @@ import { getContacts, getFilter } from "../../redux/contacts/selectors";
 import { EditContactForm } from "../EditContactForm/EditContactForm";
 import Fuse from "fuse.js";
 import { toast } from "react-toastify";
+import { Modal } from "../Modal/Modal";
 import css from "./ContactList.module.css";
 
 export const ContactsList = ({ onDelete }) => {
 	const contacts = useSelector(getContacts);
 	const filter = useSelector(getFilter);
 	const [editingContact, setEditingContact] = useState(null);
+	const [contactToDelete, setContactToDelete] = useState(null);
 
 	const fuse = new Fuse(contacts, {
 		keys: ["name", "number"],
@@ -28,9 +30,20 @@ export const ContactsList = ({ onDelete }) => {
 		setEditingContact(null);
 	};
 
-	const handleDelete = (contactId) => {
-		onDelete(contactId);
-		toast.success("Contact deleted successfully!");
+	const handleDelete = (contact) => {
+		setContactToDelete(contact);
+	};
+
+	const confirmDelete = () => {
+		if (contactToDelete) {
+			onDelete(contactToDelete.id);
+			toast.success("Contact deleted successfully!");
+			setContactToDelete(null);
+		}
+	};
+
+	const closeDeleteModal = () => {
+		setContactToDelete(null);
 	};
 
 	return (
@@ -60,7 +73,7 @@ export const ContactsList = ({ onDelete }) => {
 									</button>
 									<button
 										className={css.buttonDelete}
-										onClick={() => handleDelete(contact.id)}
+										onClick={() => handleDelete(contact)}
 									>
 										Delete
 									</button>
@@ -71,6 +84,15 @@ export const ContactsList = ({ onDelete }) => {
 				</table>
 			) : (
 				<p className={css.noContacts}>No contacts found</p>
+			)}
+
+			{}
+			{contactToDelete && (
+				<Modal
+					contactName={contactToDelete.name}
+					onClose={closeDeleteModal}
+					onConfirm={confirmDelete}
+				/>
 			)}
 		</div>
 	);
